@@ -30,4 +30,9 @@ public class LivroServiceImpl implements LivroService {
     public Livro buscarPorId(Long id) {
         return livroRepository.findById(id).get();
     }
+
+    @Override
+    public void apagarPorId(Long id) {
+        livroRepository.deleteById(id);
+    }
 }

@@ -11,4 +11,6 @@ public interface LivroService {
     List<Livro> buscarTodos();
 
     Livro buscarPorId(Long id);
+
+    void apagarPorId(Long id);
 }

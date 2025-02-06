@@ -62,8 +62,21 @@ public class LivroController {
             logger.error("Ocorreu um erro ao tentar buscar um livro pelo id: {}", e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> apagarPorId(@PathVariable Long id) {
+        logger.info("Requisição para apagar um livro pelo id.");
+        try {
+            livroService.apagarPorId(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            logger.error("Erro ao apagar um livro pelo id: {}", e.getMessage(), e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 
     static HttpHeaders getHttpHeaders() {
         HttpHeaders headers = new HttpHeaders();
