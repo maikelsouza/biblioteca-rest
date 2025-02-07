@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -41,14 +41,14 @@ public class Livro {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal valor;
 
-    @ManyToMany
+    @ManyToMany()
     @JoinTable(
             name = "Livro_Autor",
             joinColumns = @JoinColumn(name = "Livro_CodL"),
             inverseJoinColumns = @JoinColumn(name = "Autor_CodAu")
     )
     @JsonManagedReference
-    private Set<Autor> autores = new HashSet<>();
+    private List<Autor> autores;
 
     @ManyToMany
     @JoinTable(

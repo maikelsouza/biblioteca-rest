@@ -1,5 +1,6 @@
 package com.spassu.tj.biblioteca.dto;
 
+import com.spassu.tj.biblioteca.model.Autor;
 import com.spassu.tj.biblioteca.model.Livro;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +23,7 @@ public class LivroDTO {
     private Integer edicao;
     private String anoPublicacao;
     private BigDecimal valor;
+    private List<AutorDTO> autores;
 
     public static List<LivroDTO> convertToDTO(List<Livro> livros) {
         return livros.stream().map(LivroDTO::convertToDTO).collect(Collectors.toList());
@@ -35,6 +37,7 @@ public class LivroDTO {
                 .edicao(livro.getEdicao())
                 .valor(livro.getValor())
                 .anoPublicacao(livro.getAnoPublicacao())
+                .autores(AutorDTO.convertToDTO(livro.getAutores()))
                 .build();
     }
 
@@ -46,6 +49,7 @@ public class LivroDTO {
                 .edicao(livroDTO.getEdicao())
                 .valor(livroDTO.getValor())
                 .anoPublicacao((livroDTO.getAnoPublicacao()))
+                .autores(AutorDTO.convertToEntity(livroDTO.getAutores()))
                 .build();
     }
 

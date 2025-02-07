@@ -6,8 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table()
@@ -29,7 +28,7 @@ public class Autor {
 
     @ManyToMany(mappedBy = "autores")
     @JsonBackReference
-    private Set<Livro> livros = new HashSet<>();
+    private List<Livro> livros;
 
 
 }

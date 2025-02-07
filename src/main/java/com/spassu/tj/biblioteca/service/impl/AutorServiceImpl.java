@@ -11,6 +11,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -45,9 +46,13 @@ public class AutorServiceImpl implements AutorService {
         }
     }
 
-    @Override
     public List<Autor> buscarTodos() {
-        return (List<Autor>) autorRepository.findAll();
+        try {
+            List<Autor> autores = (List<Autor>) autorRepository.findAll();
+            return autores.isEmpty() ? Collections.emptyList() : autores;
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Erro ao buscar todos os Autores.", e);
+        }
     }
 
     @Override

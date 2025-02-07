@@ -11,6 +11,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -48,9 +49,14 @@ public class LivroServiceImpl implements LivroService {
         }
     }
 
-    @Override
+
     public List<Livro> buscarTodos() {
-        return (List<Livro>) livroRepository.findAll();
+        try {
+            List<Livro> livros = (List<Livro>) livroRepository.findAll();
+            return livros.isEmpty() ? Collections.emptyList() : livros;
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Erro ao buscar todos os Livros.", e);
+        }
     }
 
     @Override

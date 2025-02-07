@@ -31,6 +31,10 @@ public class AutorDTO {
                 .build();
     }
 
+    public static List<Autor> convertToEntity(List<AutorDTO> autorDTOS) {
+        return autorDTOS.stream().map(AutorDTO::convertToEntity).collect(Collectors.toList());
+    }
+
     public static Autor convertToEntity(AutorDTO autorDTO) {
         return Autor.builder()
                 .codAu(autorDTO.getCodAu())
