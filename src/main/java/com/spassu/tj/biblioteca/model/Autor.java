@@ -29,7 +29,5 @@ public class Autor {
     @ManyToMany(mappedBy = "autores")
     @JsonBackReference
     private List<Livro> livros;
-
-
 }
 
