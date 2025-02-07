@@ -1,6 +1,5 @@
 package com.spassu.tj.biblioteca.dto;
 
-import com.spassu.tj.biblioteca.model.Autor;
 import com.spassu.tj.biblioteca.model.Livro;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
