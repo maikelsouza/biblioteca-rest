@@ -1,5 +1,6 @@
 package com.spassu.tj.biblioteca.controller;
 
+import com.spassu.tj.biblioteca.dto.LivroDTO;
 import com.spassu.tj.biblioteca.model.Livro;
 import com.spassu.tj.biblioteca.service.LivroService;
 import lombok.RequiredArgsConstructor;
@@ -10,9 +11,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,10 +27,10 @@ public class LivroController {
 
 
     @PostMapping()
-    public ResponseEntity<Livro> criar(@RequestBody Livro livro) {
+    public ResponseEntity<Void> criar(@RequestBody LivroDTO livroDTO) {
         logger.info("Requisição para criar um Livro.");
         try {
-            livroService.criar(livro);
+            Livro livro = livroService.criar(LivroDTO.convertToEntity(livroDTO));
             logger.info("Livro criado com sucesso com ID: {}", livro.getCodL());
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
@@ -38,13 +39,31 @@ public class LivroController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> atualizar(@PathVariable Long id, @RequestBody LivroDTO livroDTO) {
+        logger.info("Requisição para atualizar o Livro com ID: {}", id);
+        try {
+            Livro livroAtualizado = livroService.atualizar(id, livroDTO);
+            logger.info("Livro atualizado com sucesso com ID: {}", livroAtualizado.getCodL());
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            logger.warn("Livro com ID {} não encontrado.", id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            logger.error("Erro ao tentar atualizar o livro: {}", e.getMessage(), e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     @GetMapping
-    public ResponseEntity<List<Livro>> buscarTodos() {
+    public ResponseEntity<List<LivroDTO>> buscarTodos() {
         logger.info("Requisição para buscar todos os livros.");
         try {
             List<Livro> livros = livroService.buscarTodos();
+            List<LivroDTO> livroDTOS = LivroDTO.convertToDTO(livros);
             HttpHeaders headers = getHttpHeaders();
-            return new ResponseEntity<>(livros, headers, HttpStatus.OK);
+            return new ResponseEntity<>(livroDTOS, headers, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Ocorreu um erro  ao tentar buscar todos os livros: {}", e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -52,12 +71,13 @@ public class LivroController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Livro> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<LivroDTO> buscarPorId(@PathVariable Long id) {
         logger.info("Requisição para buscar um livro pelo id.");
         try {
             Livro livro = livroService.buscarPorId(id);
+            LivroDTO livroDTO = LivroDTO.convertToDTO(livro);
             HttpHeaders headers = getHttpHeaders();
-            return new ResponseEntity<>(livro, headers, HttpStatus.OK);
+            return new ResponseEntity<>(livroDTO, headers, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Ocorreu um erro ao tentar buscar um livro pelo id: {}", e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -66,16 +86,15 @@ public class LivroController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> apagarPorId(@PathVariable Long id) {
-        logger.info("Requisição para apagar um livro pelo id.");
+        logger.info("Requisição para deletar um livro pelo id.");
         try {
             livroService.apagarPorId(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
-            logger.error("Erro ao apagar um livro pelo id: {}", e.getMessage(), e);
+            logger.error("Erro ao deletar um livro pelo id: {}", e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
 
     static HttpHeaders getHttpHeaders() {
@@ -84,14 +103,4 @@ public class LivroController {
         return headers;
     }
 
-//    private HttpHeaders loadUri(Livro livro) {
-//        final String uri = ServletUriComponentsBuilder
-//                .fromCurrentServletMapping()
-//                .path("/baskets/{id}")
-//                .buildAndExpand(livro.getCodL())
-//                .toString();
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.add("Location", uri);
-//        return headers;
-//    }
 }

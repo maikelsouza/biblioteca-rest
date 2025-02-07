@@ -1,6 +1,7 @@
 package com.spassu.tj.biblioteca.controller;
 
 
+import com.spassu.tj.biblioteca.dto.AutorDTO;
 import com.spassu.tj.biblioteca.model.Autor;
 import com.spassu.tj.biblioteca.service.AutorService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @RestController
@@ -24,10 +26,10 @@ public class AutorController {
     private final AutorService autorService;
 
     @PostMapping()
-    public ResponseEntity<Autor> criar(@RequestBody Autor autor) {
+    public ResponseEntity<Void> criar(@RequestBody AutorDTO autorDTO) {
         logger.info("Requisição para criar um Autor.");
         try {
-            autorService.criar(autor);
+            Autor autor = autorService.criar(AutorDTO.convertToEntity(autorDTO));
             logger.info("Autor criado com sucesso com ID: {}", autor.getCodAu());
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
@@ -36,12 +38,29 @@ public class AutorController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> atualizar(@PathVariable Long id, @RequestBody AutorDTO autorDTO) {
+        logger.info("Requisição para atualizar o Autor com ID: {}", id);
+        try {
+            Autor autorAtualizado = autorService.atualizar(id, autorDTO);
+            logger.info("Autor atualizado com sucesso com ID: {}", autorAtualizado.getCodAu());
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            logger.warn("Autor com ID {} não encontrado.", id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            logger.error("Erro ao tentar atualizar o autor: {}", e.getMessage(), e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping
-    public ResponseEntity<List<Autor>> buscarTodos() {
+    public ResponseEntity<List<AutorDTO>> buscarTodos() {
         logger.info("Requisição para buscar todos os autores.");
         try {
             List<Autor> autores = autorService.buscarTodos();
-            return new ResponseEntity<>(autores, HttpStatus.OK);
+            List<AutorDTO> autorDTOs = AutorDTO.convertToDTO(autores);
+            return new ResponseEntity<>(autorDTOs, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Erro ao buscar todos os autores: {}", e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -49,13 +68,26 @@ public class AutorController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Autor> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<AutorDTO> buscarPorId(@PathVariable Long id) {
         logger.info("Requisição para buscar um autor pelo id.");
         try {
             Autor autor = autorService.buscarPorId(id);
-            return new ResponseEntity<>(autor, HttpStatus.OK);
+            AutorDTO autorDTO = AutorDTO.convertToDTO(autor);
+            return new ResponseEntity<>(autorDTO, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Erro ao buscar um autor pelo id: {}", e.getMessage(), e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> apagarPorId(@PathVariable Long id) {
+        logger.info("Requisição para deletar um autor pelo id.");
+        try {
+            autorService.apagarPorId(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            logger.error("Erro ao deletar um autor pelo id: {}", e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

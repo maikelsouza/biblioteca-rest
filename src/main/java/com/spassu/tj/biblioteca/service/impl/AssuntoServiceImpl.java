@@ -1,7 +1,10 @@
 package com.spassu.tj.biblioteca.service.impl;
 
 import com.spassu.tj.biblioteca.controller.AssuntoController;
+import com.spassu.tj.biblioteca.dto.AssuntoDTO;
+import com.spassu.tj.biblioteca.dto.AutorDTO;
 import com.spassu.tj.biblioteca.model.Assunto;
+import com.spassu.tj.biblioteca.model.Autor;
 import com.spassu.tj.biblioteca.repository.AssuntoRepository;
 import com.spassu.tj.biblioteca.service.AssuntoService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,13 +27,27 @@ public class AssuntoServiceImpl implements AssuntoService {
     private AssuntoRepository assuntoRepository;
 
     @Override
-    public void criar(Assunto assunto) {
+    public Assunto criar(Assunto assunto) {
         try {
-            assuntoRepository.save(assunto);
+            return assuntoRepository.save(assunto);
         } catch (DataIntegrityViolationException e) {
             throw new RuntimeException("Erro ao salvar Assunto: possível violação de integridade.", e);
         } catch (Exception e) {
             throw new RuntimeException("Erro desconhecido ao salvar Assunto.", e);
+        }
+    }
+
+    @Override
+    @Transactional
+    public Assunto atualizar(Long id, AssuntoDTO assuntoDTO) {
+        try {
+            Assunto assunto = this.buscarPorId(id);
+            assunto.setDescricao(assuntoDTO.getDescricao());
+            return this.criar(assunto);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Erro ao atualizar Assunto: possível violação de integridade.", e);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro desconhecido ao atualizar Assunto.", e);
         }
     }
 
@@ -51,4 +69,18 @@ public class AssuntoServiceImpl implements AssuntoService {
             throw new RuntimeException("Erro ao buscar Assunto por ID.", e);
         }
     }
+
+    @Override
+    public void apagarPorId(Long id) {
+        if (!assuntoRepository.existsById(id)) {
+            throw new RuntimeException("Assunto não encontrado para o ID: " + id);
+        }
+        try {
+            assuntoRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Não é possível excluir o Assunto, pois ele está referenciado em outra tabela.", e);
+        }
+    }
+
 }
+

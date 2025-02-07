@@ -1,12 +1,17 @@
 package com.spassu.tj.biblioteca.service;
 
+import com.spassu.tj.biblioteca.dto.AutorDTO;
+import com.spassu.tj.biblioteca.dto.LivroDTO;
+import com.spassu.tj.biblioteca.model.Autor;
 import com.spassu.tj.biblioteca.model.Livro;
 
 import java.util.List;
 
 public interface LivroService {
 
-    void criar(Livro livro);
+    Livro criar(Livro livro);
+
+    Livro atualizar(Long id, LivroDTO livroDTO);
 
     List<Livro> buscarTodos();
 

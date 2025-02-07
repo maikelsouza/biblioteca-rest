@@ -1,15 +1,19 @@
 package com.spassu.tj.biblioteca.service;
 
+import com.spassu.tj.biblioteca.dto.AssuntoDTO;
 import com.spassu.tj.biblioteca.model.Assunto;
-import com.spassu.tj.biblioteca.model.Autor;
 
 import java.util.List;
 
 public interface AssuntoService {
 
-    void criar(Assunto assunto);
+    Assunto criar(Assunto assunto);
+
+    Assunto atualizar(Long id, AssuntoDTO assuntoDTO);
 
     List<Assunto> buscarTodos();
 
     Assunto buscarPorId(Long id);
+
+    void apagarPorId(Long id);
 }
