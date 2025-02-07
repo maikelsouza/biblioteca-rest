@@ -1,15 +1,10 @@
 package com.spassu.tj.biblioteca.service.impl;
 
-import com.spassu.tj.biblioteca.controller.AssuntoController;
 import com.spassu.tj.biblioteca.dto.AssuntoDTO;
-import com.spassu.tj.biblioteca.dto.AutorDTO;
 import com.spassu.tj.biblioteca.model.Assunto;
-import com.spassu.tj.biblioteca.model.Autor;
 import com.spassu.tj.biblioteca.repository.AssuntoRepository;
 import com.spassu.tj.biblioteca.service.AssuntoService;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;

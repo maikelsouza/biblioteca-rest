@@ -1,8 +1,6 @@
 package com.spassu.tj.biblioteca.service;
 
-import com.spassu.tj.biblioteca.dto.AutorDTO;
 import com.spassu.tj.biblioteca.dto.LivroDTO;
-import com.spassu.tj.biblioteca.model.Autor;
 import com.spassu.tj.biblioteca.model.Livro;
 
 import java.util.List;

@@ -1,7 +1,6 @@
 package com.spassu.tj.biblioteca.service.impl;
 
 import com.spassu.tj.biblioteca.dto.LivroDTO;
-import com.spassu.tj.biblioteca.model.Assunto;
 import com.spassu.tj.biblioteca.model.Livro;
 import com.spassu.tj.biblioteca.repository.LivroRepository;
 import com.spassu.tj.biblioteca.service.LivroService;
