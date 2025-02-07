@@ -1,5 +1,7 @@
 package com.spassu.tj.biblioteca.service.impl;
 
+import com.spassu.tj.biblioteca.dto.AssuntoDTO;
+import com.spassu.tj.biblioteca.dto.AutorDTO;
 import com.spassu.tj.biblioteca.dto.LivroDTO;
 import com.spassu.tj.biblioteca.model.Livro;
 import com.spassu.tj.biblioteca.repository.LivroRepository;
@@ -41,6 +43,8 @@ public class LivroServiceImpl implements LivroService {
             livro.setEditora(livroDTO.getEditora());
             livro.setEdicao(livroDTO.getEdicao());
             livro.setAnoPublicacao(livroDTO.getAnoPublicacao());
+            livro.setAutores(AutorDTO.convertToEntity(livroDTO.getAutores()));
+            livro.setAssuntos(AssuntoDTO.convertToEntity(livroDTO.getAssuntos()));
             return this.criar(livro);
         } catch (DataIntegrityViolationException e) {
             throw new RuntimeException("Erro ao atualizar Livro: possível violação de integridade.", e);
