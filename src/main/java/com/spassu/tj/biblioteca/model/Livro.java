@@ -48,7 +48,7 @@ public class Livro {
             inverseJoinColumns = @JoinColumn(name = "Autor_CodAu")
     )
     @JsonManagedReference
-    private Set<Autor> autores = new HashSet<>();;
+    private Set<Autor> autores = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
