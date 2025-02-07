@@ -1,6 +1,7 @@
 package com.spassu.tj.biblioteca.dto;
 
 import com.spassu.tj.biblioteca.model.Assunto;
+import com.spassu.tj.biblioteca.model.Autor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +30,10 @@ public class AssuntoDTO {
                 .codAs(assunto.getCodAs())
                 .descricao(assunto.getDescricao())
                 .build();
+    }
+
+    public static List<Assunto> convertToEntity(List<AssuntoDTO> assuntoDTOS) {
+        return assuntoDTOS.stream().map(AssuntoDTO::convertToEntity).collect(Collectors.toList());
     }
 
     public static Assunto convertToEntity(AssuntoDTO assuntoDTO) {

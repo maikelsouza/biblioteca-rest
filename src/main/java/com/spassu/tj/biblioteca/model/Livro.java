@@ -56,5 +56,5 @@ public class Livro {
             joinColumns = @JoinColumn(name = "Livro_CodL"),
             inverseJoinColumns = @JoinColumn(name = "Assunto_CodAs")
     )
-    private Set<Assunto> assuntos;
+    private List<Assunto> assuntos;
 }

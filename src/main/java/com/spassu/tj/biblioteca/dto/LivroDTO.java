@@ -24,6 +24,7 @@ public class LivroDTO {
     private String anoPublicacao;
     private BigDecimal valor;
     private List<AutorDTO> autores;
+    private List<AssuntoDTO> assuntos;
 
     public static List<LivroDTO> convertToDTO(List<Livro> livros) {
         return livros.stream().map(LivroDTO::convertToDTO).collect(Collectors.toList());
@@ -38,6 +39,7 @@ public class LivroDTO {
                 .valor(livro.getValor())
                 .anoPublicacao(livro.getAnoPublicacao())
                 .autores(AutorDTO.convertToDTO(livro.getAutores()))
+                .assuntos((AssuntoDTO.convertToDTO(livro.getAssuntos())))
                 .build();
     }
 
@@ -50,6 +52,7 @@ public class LivroDTO {
                 .valor(livroDTO.getValor())
                 .anoPublicacao((livroDTO.getAnoPublicacao()))
                 .autores(AutorDTO.convertToEntity(livroDTO.getAutores()))
+                .assuntos(AssuntoDTO.convertToEntity(livroDTO.getAssuntos()))
                 .build();
     }
 
