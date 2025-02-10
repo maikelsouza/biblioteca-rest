@@ -18,9 +18,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class LivroServiceImplTest {
@@ -84,10 +82,25 @@ class LivroServiceImplTest {
         Livro livro = contruirLivro();
         when(livroRepository.findById(anyLong())).thenReturn(Optional.of(livro));
 
+        // act
         Livro livroRetorno = livroService.buscarPorId(1L);
 
+        // assert
         assertNotNull(livroRetorno);
         assertEquals(1L, livroRetorno.getCodL());
+    }
+
+    @Test
+    void testApagarPorId() {
+        // arrange
+        when(livroRepository.existsById(anyLong())).thenReturn(true);
+        doNothing().when(livroRepository).deleteById(anyLong());
+
+        // assert
+        livroService.apagarPorId(1L);
+
+        // assert
+        verify(livroRepository, times(1)).deleteById(1L);
     }
 
 
