@@ -58,10 +58,10 @@ class LivroServiceImplTest {
         when(livroRepository.save(any(Livro.class))).thenReturn(livro);
 
         // act
-        Livro updatedLivro = livroService.atualizar(1L, livroDTO);
+        Livro livroAtualizado = livroService.atualizar(1L, livroDTO);
 
         // assert
-        assertNotNull(updatedLivro);
+        assertNotNull(livroAtualizado);
     }
 
     @Test
@@ -76,6 +76,18 @@ class LivroServiceImplTest {
         // assert
         assertFalse(livros.isEmpty());
         assertEquals(1, livros.size());
+    }
+
+    @Test
+    void testBuscarPorId() {
+        // arrange
+        Livro livro = contruirLivro();
+        when(livroRepository.findById(anyLong())).thenReturn(Optional.of(livro));
+
+        Livro livroRetorno = livroService.buscarPorId(1L);
+
+        assertNotNull(livroRetorno);
+        assertEquals(1L, livroRetorno.getCodL());
     }
 
 
