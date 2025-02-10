@@ -1,5 +1,8 @@
 package com.spassu.tj.biblioteca.service.impl;
 
+import com.spassu.tj.biblioteca.dto.AssuntoDTO;
+import com.spassu.tj.biblioteca.dto.AutorDTO;
+import com.spassu.tj.biblioteca.dto.LivroDTO;
 import com.spassu.tj.biblioteca.model.Assunto;
 import com.spassu.tj.biblioteca.model.Autor;
 import com.spassu.tj.biblioteca.model.Livro;
@@ -13,11 +16,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyLong;
 
 @ExtendWith(MockitoExtension.class)
 class LivroServiceImplTest {
@@ -46,6 +51,32 @@ class LivroServiceImplTest {
         assertEquals(2, livroCriado.getAssuntos().size());
     }
 
+    @Test
+    void testAtualizar() {
+        // arrange
+        Livro livro = contruirLivro();
+        LivroDTO livroDTO = contruirLivroDTO();
+        when(livroRepository.findById(anyLong())).thenReturn(Optional.of(livro));
+        when(livroRepository.save(any(Livro.class))).thenReturn(livro);
+
+
+        Livro updatedLivro = livroService.atualizar(1L, livroDTO);
+        assertNotNull(updatedLivro);
+    }
+
+
+
+    private LivroDTO contruirLivroDTO(){
+        return LivroDTO.builder()
+                .codL(1L)
+                .titulo("O Guarani")
+                .valor(BigDecimal.ONE)
+                .editora("Principis")
+                .edicao(1)
+                .assuntos(construirListaAssuntosDTO())
+                .autores(construirListaAutoresDTO())
+                .build();
+    }
 
     private Livro contruirLivro(){
         return Livro.builder()
@@ -70,12 +101,34 @@ class LivroServiceImplTest {
                 .build();
     }
 
+    private List<AssuntoDTO> construirListaAssuntosDTO(){
+        return List.of(construirAssuntoDTO(),construirAssuntoDTO());
+    }
+
+    private AssuntoDTO construirAssuntoDTO(){
+        return AssuntoDTO.builder()
+                .codAs(gerarRandomUmAteCem())
+                .descricao("Romance")
+                .build();
+    }
+
     private List<Autor> construirListaAutores(){
         return List.of(construirAutor(),construirAutor());
     }
 
     private Autor construirAutor(){
         return Autor.builder()
+                .codAu(gerarRandomUmAteCem())
+                .nome("José de Alencar")
+                .build();
+    }
+
+    private List<AutorDTO> construirListaAutoresDTO(){
+        return List.of(construirAutorDTO(),construirAutorDTO());
+    }
+
+    private AutorDTO construirAutorDTO(){
+        return AutorDTO.builder()
                 .codAu(gerarRandomUmAteCem())
                 .nome("José de Alencar")
                 .build();
