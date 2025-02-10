@@ -15,9 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -59,9 +57,25 @@ class LivroServiceImplTest {
         when(livroRepository.findById(anyLong())).thenReturn(Optional.of(livro));
         when(livroRepository.save(any(Livro.class))).thenReturn(livro);
 
-
+        // act
         Livro updatedLivro = livroService.atualizar(1L, livroDTO);
+
+        // assert
         assertNotNull(updatedLivro);
+    }
+
+    @Test
+    void testBuscarTodos() {
+        // arrange
+        Livro livro = contruirLivro();
+        when(livroRepository.findAll()).thenReturn(Collections.singletonList(livro));
+
+        // act
+        List<Livro> livros = livroService.buscarTodos();
+
+        // assert
+        assertFalse(livros.isEmpty());
+        assertEquals(1, livros.size());
     }
 
 
