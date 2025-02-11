@@ -35,7 +35,7 @@ O projeto consiste em um cadastro de livros, sendo que para cada livro deve ter 
 [Executar a classe BibliotecaApplication](src/main/java/com/spassu/tj/biblioteca/BibliotecaApplication.java)
 
 ### Base de Dados
-Para essa api foi utilizada o banco PostgreSQL, sendo necessário executar uma view após iniciar a aplicação.<br>
+Para esta API, foi utilizado o banco PostgreSQL, sendo necessário executar uma view após iniciar a aplicação.<br>
 
 #### Baixar Script View
 [📥 Baixar scritp da view](src/main/resources/scripts/VwAutoresLivrosAssuntos.sql)
@@ -51,7 +51,8 @@ Para essa api foi utilizada o banco PostgreSQL, sendo necessário executar uma v
 </ul>
 
 ### Mais Endpoints
-Caso queira realizar o crud das entidades: autor, assunto e livro, você pode baixar o json dos endpoins para ser importado no postman
+Caso queira realizar o CRUD das entidades: autor, assunto e livro, você pode baixar o JSON dos endpoints para importá-lo no Postman.
+
 #### Download do Arquivo JSON
 [📥 Baixar arquivo JSON](src/main/resources/postman/Biblioteca-rest.postman_collection.json)
 
