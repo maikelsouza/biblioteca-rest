@@ -30,10 +30,19 @@ O projeto consiste em um cadastro de livros, sendo que para cada livro deve ter 
 
 ## Passo a passo para executar a API
 
+### Inicializar a aplicação
+
+[Executar a classe BibliotecaApplication](src/main/java/com/spassu/tj/biblioteca/BibliotecaApplication.java)
+
+### Base de Dados
+Para essa api foi utilizada o banco PostgreSQL, sendo necessário executar uma view após iniciar a aplicação.<br>
+
+#### Baixar Script View
+[📥 Baixar scritp da view](src/main/resources/scripts/VwAutoresLivrosAssuntos.sql)
+
 ### Endpoints
 
 <ul>
-  <li>Executar a classe BibliotecaApplication</li>
   <li>Chamar o endpoint - http://localhost:8080/api/autores -  POST </li>
   <li>Chamar o endpoint - http://localhost:8080/api/assuntos - POST </li>
   <li>Chamar o endpoint - http://localhost:8080/api/livros - POST </li>
@@ -47,11 +56,6 @@ Caso queira realizar o crud das entidades: autor, assunto e livro, você pode ba
 [📥 Baixar arquivo JSON](src/main/resources/postman/Biblioteca-rest.postman_collection.json)
 
 
-### Base de Dados
-Para essa api foi utilizada o banco PostgreSQL, sendo necessário executar uma view após iniciar a aplicação.<br>
-
-#### Download do Arquivo JSON
-[📥 Baixar scritp da view](src/main/resources/scripts/VwAutoresLivrosAssuntos.sql)
 
 
 
