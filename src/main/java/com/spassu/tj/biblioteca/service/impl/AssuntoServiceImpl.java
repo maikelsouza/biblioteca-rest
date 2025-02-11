@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,7 +49,7 @@ public class AssuntoServiceImpl implements AssuntoService {
 
     public List<Assunto> buscarTodos() {
         try {
-            List<Assunto> assuntos = (List<Assunto>) assuntoRepository.findAll();
+            List<Assunto> assuntos = assuntoRepository.findAll(Sort.by(Sort.Order.asc("descricao")));
             return assuntos.isEmpty() ? Collections.emptyList() : assuntos;
         } catch (DataAccessException e) {
             throw new RuntimeException("Erro ao buscar todos os Assuntos.", e);

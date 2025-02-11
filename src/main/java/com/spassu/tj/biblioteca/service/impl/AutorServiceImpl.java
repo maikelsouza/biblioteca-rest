@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,7 +49,7 @@ public class AutorServiceImpl implements AutorService {
 
     public List<Autor> buscarTodos() {
         try {
-            List<Autor> autores = (List<Autor>) autorRepository.findAll();
+            List<Autor> autores = autorRepository.findAll(Sort.by(Sort.Order.asc("nome")));
             return autores.isEmpty() ? Collections.emptyList() : autores;
         } catch (DataAccessException e) {
             throw new RuntimeException("Erro ao buscar todos os Autores.", e);

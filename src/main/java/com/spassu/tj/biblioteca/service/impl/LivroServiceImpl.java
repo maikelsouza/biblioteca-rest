@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,7 +57,7 @@ public class LivroServiceImpl implements LivroService {
 
     public List<Livro> buscarTodos() {
         try {
-            List<Livro> livros = (List<Livro>) livroRepository.findAll();
+            List<Livro> livros = livroRepository.findAll(Sort.by(Sort.Order.asc("titulo")));
             return livros.isEmpty() ? Collections.emptyList() : livros;
         } catch (DataAccessException e) {
             throw new RuntimeException("Erro ao buscar todos os Livros.", e);
