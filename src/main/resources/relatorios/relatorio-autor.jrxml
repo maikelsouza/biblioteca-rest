@@ -79,21 +79,21 @@
 					<text><![CDATA[Título]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="192" y="0" width="80" height="20" uuid="49249d51-bde2-453f-97a4-079964756ed0"/>
+					<reportElement x="192" y="0" width="179" height="20" uuid="49249d51-bde2-453f-97a4-079964756ed0"/>
 					<textElement>
 						<font size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Assunto]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="272" y="0" width="78" height="20" uuid="c728b555-d788-4370-9845-4e54bd840a35"/>
+					<reportElement x="371" y="0" width="78" height="20" uuid="c728b555-d788-4370-9845-4e54bd840a35"/>
 					<textElement>
 						<font size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Valor]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="350" y="0" width="100" height="20" uuid="d14e5f41-5fd9-4fad-b2cd-223f0a8765a7"/>
+					<reportElement x="449" y="0" width="100" height="20" uuid="d14e5f41-5fd9-4fad-b2cd-223f0a8765a7"/>
 					<textElement>
 						<font size="12" isBold="true"/>
 					</textElement>
@@ -147,21 +147,21 @@
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="80" height="20" uuid="e425f707-e13e-44c6-9a73-f26febb37517"/>
+				<reportElement x="0" y="0" width="140" height="20" uuid="e425f707-e13e-44c6-9a73-f26febb37517"/>
 				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="192" y="0" width="80" height="20" uuid="af05f5c9-04d0-4086-84fd-6e694ef81192"/>
+				<reportElement x="192" y="0" width="179" height="20" uuid="af05f5c9-04d0-4086-84fd-6e694ef81192"/>
 				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
 			</textField>
 			<textField pattern="R$#.00">
-				<reportElement x="272" y="0" width="78" height="20" uuid="b171084a-89f8-4a1a-9cb2-d357ed3bc42e">
+				<reportElement x="371" y="0" width="78" height="20" uuid="b171084a-89f8-4a1a-9cb2-d357ed3bc42e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="350" y="0" width="100" height="20" uuid="100f2b85-fa24-4f8d-8c3f-8fdf67d3e887">
+				<reportElement x="449" y="0" width="100" height="20" uuid="100f2b85-fa24-4f8d-8c3f-8fdf67d3e887">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{ano_publicacao}]]></textFieldExpression>
