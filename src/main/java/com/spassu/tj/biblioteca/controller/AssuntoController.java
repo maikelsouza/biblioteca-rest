@@ -81,14 +81,14 @@ public class AssuntoController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> apagarPorId(@PathVariable Long id) {
+    public ResponseEntity<?> apagarPorId(@PathVariable Long id) {
         logger.info("Requisição para deletar um assunto pelo id.");
         try {
             assuntoService.apagarPorId(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             logger.error("Erro ao deletar um assunto pelo id: {}", e.getMessage(), e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }

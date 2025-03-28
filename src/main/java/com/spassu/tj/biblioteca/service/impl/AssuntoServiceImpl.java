@@ -74,7 +74,7 @@ public class AssuntoServiceImpl implements AssuntoService {
         try {
             assuntoRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new RuntimeException("Não é possível excluir o Assunto, pois ele está referenciado em outra tabela.", e);
+            throw new RuntimeException("Não é possível excluir o Assunto, pois ele está referenciado em algum livro.", e);
         }
     }
 

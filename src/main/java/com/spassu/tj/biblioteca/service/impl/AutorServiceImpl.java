@@ -73,7 +73,7 @@ public class AutorServiceImpl implements AutorService {
         try {
             autorRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
-            throw new RuntimeException("Não é possível excluir o Autor, pois ele está referenciado em outra tabela.", e);
+            throw new RuntimeException("Não é possível excluir o Autor, pois ele está referenciado em algum livro.", e);
         }
     }
 
