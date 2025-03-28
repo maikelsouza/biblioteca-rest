@@ -21,7 +21,7 @@ public class AssuntoDTO {
 
 
     public static List<AssuntoDTO> convertToDTO(List<Assunto> assuntos) {
-        return assuntos.stream().map(AssuntoDTO::convertToDTO).collect(Collectors.toList());
+        return assuntos.stream().map(AssuntoDTO::convertToDTO).toList();
     }
 
     public static AssuntoDTO convertToDTO(Assunto assunto) {
